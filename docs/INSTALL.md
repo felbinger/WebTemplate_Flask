@@ -20,9 +20,10 @@ services:
       - "9999:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: hc
+      MYSQL_DATABASE: web
     volumes:
       - "/srv/mysql:/var/lib/mysql"
+      
   web-template:
     image: web-template
     container_name: root_web-template_1
@@ -33,7 +34,7 @@ services:
       MYSQL_PASSWORD: root
 ```
 
-* Add database hc (in this example automatically)
+* Add database web (in this example automatically)
 * Change database collection from `latin1_swedish_ci` to `utf8mb4_unicode_ci`
 * Execute following sql:
 ```sql
