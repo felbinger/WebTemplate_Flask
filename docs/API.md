@@ -9,16 +9,16 @@
   It is important to not treat this as a failure operation; 
   the execution status is unknown and could have been a success.
 * Any endpoint can return an error; the error payload is as follows:
-```json
-{
-    "message": "Payload is invalid",
-    "errors": [
-        "missing attribute username", 
-        "missing attribute email"
-    ],
-    "statusCode": 400
-}
-```
+    ```json
+    {
+        "message": "Payload is invalid",
+        "errors": [
+            "missing attribute username", 
+            "missing attribute email"
+        ],
+        "statusCode": 400
+    }
+    ```
 
 * For `POST`, `PUT`, and `DELETE` endpoints, the parameters should be sent
   in the `request body` with content type `application/json`.
