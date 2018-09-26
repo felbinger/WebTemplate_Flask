@@ -379,8 +379,27 @@
         function openModalUpdateAccount(data) {
         	$('#updateID').val(data['publicId']);
             $("#updateUsername").val(data["username"]);
-            $("#updateCreated").val(data["created"]);
-            $("#updateLastLogin").val(data["lastLogin"]);
+
+            let created = new Date(data["created"]);
+            $("#updateCreated").val(
+            	("0" + created.getUTCDate()).slice(-2) + "." +
+                ("0" + (created.getUTCMonth()+1)).slice(-2) + "." +
+                created.getUTCFullYear() + " " +
+                ("0" + created.getUTCHours()).slice(-2) + ":" +
+                ("0" + created.getUTCMinutes()).slice(-2) + ":" +
+                ("0" + created.getUTCSeconds()).slice(-2)
+            );
+
+            let lastLogin = new Date(data["lastLogin"]);
+            $("#updateLastLogin").val(
+            	("0" + lastLogin.getUTCDate()).slice(-2) + "." +
+                ("0" + (lastLogin.getUTCMonth()+1)).slice(-2) + "." +
+                lastLogin.getUTCFullYear() + " " +
+                ("0" + lastLogin.getUTCHours()).slice(-2) + ":" +
+                ("0" + lastLogin.getUTCMinutes()).slice(-2) + ":" +
+                ("0" + lastLogin.getUTCSeconds()).slice(-2)
+            );
+
             $("#updateEmail").val(data["email"]);
             $("#updateDisplayName").val(data['displayName']);
             $('select[name="role"]').find('option[value="' + data['role']['name'] + '"]').attr("selected",true);
