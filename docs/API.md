@@ -1,7 +1,7 @@
 # API Documentation
 ### General API Information
 * The base endpoint is: [http://localhost:5000/](http://localhost:5000/)
-* All endpoints return either a JSON object or array.
+* All endpoints return a JSON object.
 * All time and timestamp related fields are in [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) format.
 * HTTP `4XX` return codes are used for for malformed requests;
   the issue is on the sender's side.
