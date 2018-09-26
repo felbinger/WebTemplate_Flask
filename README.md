@@ -32,8 +32,8 @@ from [Start Bootstrap](https://startbootstrap.com).
 |  | displayName | Varchar(100) | |
 |  | email | Varchar(100) | unique |
 |  | password | Varchar(255) (sha512 Hash) |  |
-|  | lastLogin | TimeStamp |  |
-|  | created | TimeStamp |  |
+|  | lastLogin | DateTime |  |
+|  | created | DateTime |  |
 |  | role | Integer | foreign key -> role.id |
 | roles | id | Integer | primary key, auto increment |
 |  | name | Varchar(80) |  |
@@ -41,8 +41,8 @@ from [Start Bootstrap](https://startbootstrap.com).
 | tokens | id | Integer | primary key, auto increment |
 |  | user | Integer | foreign key -> user.id |
 |  | token | Varchar(80) | unique |
-|  | created | TimeStamp |  |
-|  | expires | TimeStamp |  |
+|  | created | DateTime |  |
+|  | expires | DateTime |  |
 |  | broken | Integer(1) (boolean) |  |
 
 
