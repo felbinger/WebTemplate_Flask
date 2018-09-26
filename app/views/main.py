@@ -1,5 +1,5 @@
 import requests
-from flask import Blueprint, redirect, render_template, request, flash, url_for, send_from_directory, session
+from flask import Blueprint, render_template, request, flash, url_for, session
 from .utils import require_login, require_admin
 
 main = Blueprint(__name__, 'main')
