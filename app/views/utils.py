@@ -17,9 +17,14 @@ def require_logout(view_func):
     @wraps(view_func)
     def wrapper(*args, **kwargs):
         if session.get('Access-Token'):
-            return redirect(url_for('app.views.main.index')), 403
-        else:
-            return view_func(*args, **kwargs)
+            # check if token is still valid
+            resp = requests.get(
+                f'{request.scheme}://{request.host}/api/auth',
+                headers={'Access-Token': session.get('Access-Token')}
+            )
+            if resp.status_code != 401:
+                return redirect(url_for('app.views.main.index')), 403
+        return view_func(*args, **kwargs)
     return wrapper
 
 

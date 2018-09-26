@@ -66,4 +66,7 @@ class AuthResource(MethodView):
     def delete(self, token, **_):
         token.broken = 1
         db.session.commit()
-        return '', 204
+        return ResultSchema(
+            data='Successfully logged out.',
+            status_code=200
+        ).jsonify()

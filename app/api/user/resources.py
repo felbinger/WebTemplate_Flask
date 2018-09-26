@@ -107,6 +107,12 @@ class UserResource(MethodView):
                     errors='not allowed to change role',
                     status_code=403
                 ).jsonify()
+            if 'username' in data.keys():
+                return ResultErrorSchema(
+                    message='You are not allowed to change your username!',
+                    errors='not allowed to change username',
+                    status_code=403
+                ).jsonify()
             for key, val in data.items():
                 if key == 'password':
                     setattr(user, key, sha512(val.encode()).hexdigest())
@@ -139,7 +145,10 @@ class UserResource(MethodView):
                 db.session.delete(token)
             db.session.delete(user)
             db.session.commit()
-            return '', 204
+            return ResultSchema(
+                data='Successfully deleted user.',
+                status_code=200
+            ).jsonify()
         else:
             token = request.headers.get('Access-Token')
             if token:
@@ -158,7 +167,10 @@ class UserResource(MethodView):
                             db.session.delete(token)
                         db.session.delete(user)
                         db.session.commit()
-                        return '', 204
+                        return ResultSchema(
+                            data='Successfully deleted user.',
+                            status_code=200
+                        ).jsonify()
 
     def _update_user_as_admin(self, target, **_):
         schema = DaoUpdateUserSchema()

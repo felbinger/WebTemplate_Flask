@@ -53,10 +53,26 @@ def test_auth_get_user_data_without_token(app, client):
         assert json.loads(resp.data.decode()).get('message') == 'Missing Access-Token'
 
 
-def test_auth_invalid_token(app, client):
+def test_auth_get_user_invalid_token(app, client):
     db = client.db
     with app.app_context():
         resp = client.get('/api/auth', headers={'Access-Token': 'invalid'})
+        assert resp.status_code == 401
+        assert json.loads(resp.data.decode()).get('message') == 'Invalid Access-Token'
+
+
+def test_auth_logout(app, client):
+    db = client.db
+    with app.app_context():
+        resp = client.delete('/api/auth', headers={'Access-Token': _generate_user_token(app, client)})
+        assert resp.status_code == 200
+        assert json.loads(resp.data.decode()).get('data') == 'Successfully logged out.'
+
+
+def test_auth_logout_invalid_token(app, client):
+    db = client.db
+    with app.app_context():
+        resp = client.delete('/api/auth', headers={'Access-Token': 'invalid'})
         assert resp.status_code == 401
         assert json.loads(resp.data.decode()).get('message') == 'Invalid Access-Token'
 

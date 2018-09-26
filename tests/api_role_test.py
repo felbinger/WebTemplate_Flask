@@ -113,5 +113,6 @@ def test_delete_role(app, client):
     with app.app_context():
         _generate_named_role(app, client, name='test')
         resp = client.delete(f'/api/roles/test', headers={'Access-Token': _generate_admin_token(app, client)})
-        assert resp.status_code == 204
+        assert resp.status_code == 200
+        assert json.loads(resp.data.decode()).get('data') == 'Successfully deleted role.'
 

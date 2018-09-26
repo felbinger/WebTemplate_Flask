@@ -37,8 +37,8 @@ class User(db.Model):
             'username': self.username,
             'displayName': self.display_name,
             'email': self.email,
-            'created': self.created.strftime("%d.%m.%Y %H:%M:%S"),
-            'lastLogin': self.last_login.strftime("%d.%m.%Y %H:%M:%S") if self.last_login else None,
+            'created': self.created.isoformat(),
+            'lastLogin': self.last_login.isoformat() if self.last_login else None,
             'role': self.role.jsonify()
         }
 

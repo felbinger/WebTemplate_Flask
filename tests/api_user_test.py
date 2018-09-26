@@ -189,7 +189,8 @@ def test_self_delete(app, client):
     db = client.db
     with app.app_context():
         resp = client.delete('/api/users/me', headers={'Access-Token': _generate_user_token(app, client)})
-        assert resp.status_code == 204
+        assert resp.status_code == 200
+        assert json.loads(resp.data.decode()).get('data') == 'Successfully deleted user.'
 
 
 def test_delete_user(app, client):
@@ -200,4 +201,5 @@ def test_delete_user(app, client):
             f'/api/users/{str(User.query.filter_by(username="random").first().public_id)}',
             headers={'Access-Token': _generate_admin_token(app, client)}
         )
-        assert resp.status_code == 204
+        assert resp.status_code == 200
+        assert json.loads(resp.data.decode()).get('data') == 'Successfully deleted user.'
