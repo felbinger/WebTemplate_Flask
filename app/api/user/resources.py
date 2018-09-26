@@ -134,6 +134,7 @@ class UserResource(MethodView):
     @require_token
     def delete(self, uuid, user, **_):
         if uuid == 'me':
+            # delete all tokens for this user to prevent foreign key errors
             for token in Token.query.filter_by(user=user).all():
                 db.session.delete(token)
             db.session.delete(user)
@@ -152,6 +153,7 @@ class UserResource(MethodView):
                         ).jsonify()
                     else:
                         user = User.query.filter_by(public_id=uuid).first()
+                        # delete all tokens for this user to prevent foreign key errors
                         for token in Token.query.filter_by(user=user).all():
                             db.session.delete(token)
                         db.session.delete(user)
@@ -169,7 +171,11 @@ class UserResource(MethodView):
                 errors=error,
                 status_code=400
             ).jsonify()
+
+        # for each item in data
         for key, val in data.items():
+            # check if the key need an special treatment
+            # role need to be the role object, get the object and add it to the user
             if key == 'role':
                 role = Role.query.filter_by(name=val).first()
                 if not role:
@@ -180,10 +186,13 @@ class UserResource(MethodView):
                     ).jsonify()
                 else:
                     target.role = role
+            # the password should be hashed
             elif key == 'password':
                 setattr(target, key, sha512(val.encode()).hexdigest())
             else:
+                # all others attributes can be added plain
                 setattr(target, key, val)
+        # commit changes
         db.session.commit()
         return ResultSchema(
             data=target.jsonify()
