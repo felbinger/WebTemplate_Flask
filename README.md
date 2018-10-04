@@ -10,7 +10,6 @@ from [Start Bootstrap](https://startbootstrap.com).
 * Messaging System
 
 ##### API
-* Improve Password Hashing ([Salt's](https://en.wikipedia.org/wiki/Salt_(cryptography)))
 * More User Attributes: (e.g. Profile Pictures)
 
 ##### Frontend

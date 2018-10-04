@@ -6,6 +6,7 @@ class Config(object):
     TESTING = False
     SECRET_KEY = 'B0l04[1\n8w]fEzWp1Rd/eRG{qbVlO3A4yTsrrBa8kZAi7=BDdJ}i21'
     TOKEN_VALIDITY = 48  # hours
+    SALT_LENGTH = 12  # value should be between 1 and 128
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
 

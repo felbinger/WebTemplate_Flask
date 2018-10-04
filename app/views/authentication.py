@@ -34,12 +34,9 @@ def login():
 @authentication.route('/logout', methods=['GET'])
 @require_login
 def logout():
-    resp = requests.delete(
+    requests.delete(
         f'{request.scheme}://{request.host}{url_for("auth_api")}',
         headers={'Access-Token': session.get('Access-Token')},
     )
-    if resp.status_code != 204:
-        # The next line can be removed, its useful for debugging.
-        print(f"Unable to delete token ({session.get('Access-Token')}) from database!")
     session['Access-Token'] = None
     return redirect(url_for('app.views.main.index'), code=302)

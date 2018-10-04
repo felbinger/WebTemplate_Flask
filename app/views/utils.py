@@ -19,7 +19,7 @@ def require_logout(view_func):
         if session.get('Access-Token'):
             # check if token is still valid
             resp = requests.get(
-                f'{request.scheme}://{request.host}/api/auth',
+                f'{request.scheme}://{request.host}{url_for("auth_api")}',
                 headers={'Access-Token': session.get('Access-Token')}
             )
             if resp.status_code != 401:
@@ -32,7 +32,7 @@ def require_admin(view_func):
     @wraps(view_func)
     def wrapper(*args, **kwargs):
         user = requests.get(
-            f'{request.scheme}://{request.host}/api/auth',
+            f'{request.scheme}://{request.host}{url_for("auth_api")}',
             headers={'Access-Token': session.get('Access-Token')}
         ).json().get('data')
         if user.get('role').get('name') == 'admin':

@@ -8,7 +8,7 @@ main = Blueprint(__name__, 'main')
 @main.route('/', methods=['GET'])
 def index():
     user = requests.get(
-        f'{request.scheme}://{request.host}/api/auth',
+        f'{request.scheme}://{request.host}{url_for("auth_api")}',
         headers={'Access-Token': session.get('Access-Token')}
     ).json().get('data') or None
 
@@ -59,7 +59,7 @@ def settings():
                     flash('Your account has been updated!', 'success')
 
     user = requests.get(
-        f'{request.scheme}://{request.host}/api/auth',
+        f'{request.scheme}://{request.host}{url_for("auth_api")}',
         headers={'Access-Token': session.get('Access-Token')}
     ).json().get('data')
 
@@ -225,12 +225,12 @@ def dashboard():
 
     data = dict()
     data['accounts'] = requests.get(
-        f'{request.scheme}://{request.host}/api/users',
+        f'{request.scheme}://{request.host}{url_for("user_api")}',
         headers={'Access-Token': session.get('Access-Token')}
     ).json().get('data')
 
     data['roles'] = requests.get(
-        f'{request.scheme}://{request.host}/api/roles',
+        f'{request.scheme}://{request.host}{url_for("role_api")}',
         headers={'Access-Token': session.get('Access-Token')}
     ).json().get('data')
 

@@ -14,7 +14,6 @@ def test_auth(app, client):
     with app.app_context():
         _create_user(app, client)
         resp = client.post('/api/auth', json={'username': 'max', 'password': 'PasswordForMax'})
-        print(resp.data)
         assert resp.status_code == 200
         assert len(json.loads(resp.data.decode()).get('errors')) == 0
         assert 'token' in json.loads(resp.data.decode())
