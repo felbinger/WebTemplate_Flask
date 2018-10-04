@@ -68,6 +68,18 @@ def _generate_user_token(app, client):
         return data.get('token')
 
 
+# generate a session (token in a cookie) for an non admin user
+def _generate_user_session(app, client):
+    db = client.db
+    with app.app_context():
+        _create_user(app, client)
+        resp = client.post('/login', data={'username': 'max', 'password': 'PasswordForMax'})
+        assert resp.status_code == 302  # expect redirect to another page
+        assert 'session=' in resp.headers['Set-Cookie']
+        session_cookie = resp.headers['Set-Cookie'].rsplit("=")[1].rsplit(";")[0]
+        return str(session_cookie)
+
+
 # generate role by name
 def _generate_named_role(app, client, name):
     db = client.db
@@ -143,3 +155,4 @@ def _generate_admin_token(app, client):
         resp = client.post('/api/auth', json={'username': 'test', 'password': 'PasswordForTestine'})
         data = json.loads(resp.data.decode())
         return data.get('token')
+
